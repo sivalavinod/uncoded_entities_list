@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<html>
+<head>
+    {% block content %}
+     <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <style>
+        table,th,td{
+            border-collapse: collapse;}
+          .a{
+            color: white;
+              font-size: 16px;
+              text-align: center;
+        }
+        .b{
+            text-align: center;
+            height: 50px;
+            width: 20px;
+            word-wrap: break-word;
+            font-size: 14px
+        }
+         .c{
+        position: absolute;
+        right: 50px;
+    }
+        .d{
+            position: absolute;
+            left: 20px;
+        }
+        .e{
+            padding-left: 1px;
+        }
+        .medeva_text{
+            position: absolute;
+            top:0px;
+            right: 450px;
+            font-size: 20px;
+        }
+          .f{
+        position: absolute;
+        top:85px;
+        right: 45px;
+        font-size: 20px;
+         }
+          .search{
+              position: absolute;
+              right: 200px;
+              top :85px;
+          }
+        .href_show_all{
+             position: absolute;
+              right: 550px;
+              top : 85px;
+        }
+         .pagination{
+            position: absolute;
+            left: 400px;
+            top : 85px;
+        }
+    </style>
+</head>
+<body>
+
+{#<table bgcolor="#2f4f4f" width="1350px" >#}
+{##}
+{#        <tr ><th align="left" ><img src="{% static 'images/medeva_logo.png' %}"  ></th>#}
+{#            <td><h2 align="left" style="font-size:200%; color: white; padding-top: 10px " class="medeva_text" ><span>Medeva Uncoded List</span></h2></td>#}
+{#        </tr>#}
+{#</table>#}
+
+<div class="container">
+    <div class="row">
+        <div class="pagination">
+             <span class="step-links">
+                {% if qs.has_previous %}
+                    <a href="{% url 'admin_hm' %}?pageno=1">&laquo; first</a>
+                    <a href="{% url 'admin_hm' %}?pageno={{ qs.previous_page_number }}">previous</a>
+                {% endif %}
+             <span class="current">
+                  Page {{ qs.number }} of {{ qs.paginator.num_pages }}
+             </span>
+
+                {% if qs.has_next %}
+                   <a href="{% url 'admin_hm' %}?pageno={{ qs.next_page_number }}">next</a>
+                   <a href="{% url 'admin_hm' %}?pageno={{ qs.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+             </span>
+         </div>
+
+        <div class="search">
+            <form action="{% url 'hm' %}" method="post">
+                            {% csrf_token %}
+                  <input type="text" name="search" placeholder="search" autocomplete="off">
+                  <button type="submit">search</button>
+            </form>
+        </div>
+
+        <div class="href_show_all">
+            <a href="{% url 'admin_hm' %}">show all</a>
+        </div>
+
+        <div>
+               <a class="f" href="{% url 'verification_page' %}"> Back</a>
+        </div>
+    </div>
+
+</div>
+<br>
+<br>
+
+<div >
+  <table border="1" style="font-family:Calibri" >
+   <tr bgcolor="green" class="a">
+       <th >S.No</th>
+       <th >Entity</th>
+       <th>Total Count</th>
+       <th>Entity Section</th>
+       <th>Organisation name</th>
+       <th width="20px">Doctor_Name</th>
+       <th>Recommended
+           Coding System</th>
+       <th>Recommended
+           Code</th>
+       <th>Recommended
+           Token</th>
+       <th>Select
+           Recommended</th>
+       <th>Correct Text</th>
+       <th>Code</th>
+       <th>Applicable For Which</th>
+       <th></th>
+
+   </tr>
+
+  {% for x in qs %}
+      <tr class="b">
+      <td class="s_no">{{x.s_no  }}</td>
+      <td >{{x.entity }}</td>
+      <td>{{x.total_count  }}</td>
+      <td>{{x.entity_sections  }}</td>
+      <td>{{x.organisation_name  }}</td>
+      <td>{{x.doctor_name  }}</td>
+        <form action="{% url 'save' id=x.s_no %}" method="post">
+              {% csrf_token %}
+{#      <td class="v1"><input type="text"  value="{{x.recommended_coding_system  }}" id="rec_coding_sys" class="rec_coding_sys"></td>#}
+      <td class="v3">{{x.recommended_coding_system  }}</td>
+      <td class="v2">{{x.recommended_code  }}</td>
+{#      <td class="v2"><input type="text"  value="{{x.recommended_code  }}" id="rec_code"class="rec_code"></td>#}
+      <td class="recommended_token" >{{x.recommended_token  }}</td>
+
+      <td style="text-align: center" class="check_box_" >
+          <input type="checkbox" name="select recommended" value= 'false'  class="check_box_" >
+      </td>
+
+       <td class="p1"><input type="text" name="correct text"  id="rec_coding_sys" required autocomplete="off"></td>
+       <td class="p2" width="100"><input type="text" name="code"  id="rec_code" required autocomplete="off" ></td>
+
+
+      <td class="p3">
+          <select name="applicable_for_which" id="select_drug_typ{{ x.s_no }}">
+              <option value='SNOMED'>SNOMED</option>
+              <option value='LOINC'>LOINC</option>
+              <option value='Meds'>Meds</option>
+          </select>
+      </td>
+          <td class="bttn" style="padding-left: 2px" ><button type="submit">submit</button> </td>
+          </form>
+</tr>
+{% endfor %}
+
+
+   <script>
+       $('.check_box_').click(function() {
+            if($(this).is(':checked')) {
+                let entity = $(this).parent().siblings('.recommended_token').text()
+                let name2 = $(this).parent().siblings('.v2').text()
+                let name3 = $(this).parent().siblings('.v3').text()
+                let s_no = $(this).parent().siblings('.s_no').text()
+                let name3_val = $(this).parent().siblings('.v3').val()
+                let p1 = $(this).parent().siblings('.p1').find('input')
+                let p2 = $(this).parent().siblings('.p2').find('input')
+                let p3 = $(this).parent().siblings('.p3').find('select')
+                p1.val(entity)
+                p2.val(name2)
+                p1.attr('readonly', true)
+                p2.attr('readonly', true)
+                $('#select_drug_typ'+s_no).val(name3);
+                {#$('#select_drug_typ').val(name3_val);#}
+                {#p3.append(`<option value="${name3_val}" selected>${ name3 }</option>`)#}
+                {#$( "#select_drug_typ option:name3_val" ).text();#}
+                {#$('#select_drug_typ'+s_no+' [value='+name3+']').attr('selected', 'true');#}
+
+                $(this).val('true')
+            } else {
+                let p1 = $(this).parent().siblings('.p1').find('input')
+                let p2 = $(this).parent().siblings('.p2').find('input')
+                let p3 = $(this).parent().siblings('.p3').find('select')
+                let s_no = $(this).parent().siblings('.s_no').text()
+                $('#select_drug_typ'+s_no).val('SNOMED');
+                {#$('#select_drug_typ'+s_no+' [value=SNOMED]').attr('selected', 'false');#}
+                p1.val('')
+                p2.val('')
+                p1.attr('readonly', false)
+                p2.attr('readonly', false)
+                $(this).val('false')
+            }
+        });
+
+  </script>
+
+
+{#   <script>#}
+{#       $('.check_box_').click(function() {#}
+{#            if($(this).is(':checked')) {#}
+{#                let entity = $(this).parent().siblings('.entity').text()#}
+{#                let name2 = $(this).parent().siblings('.v2').text()#}
+{#                let name3 = $(this).parent().siblings('.v3').text()#}
+{#                let name3_val = $(this).parent().siblings('.v3').val()#}
+{#                let p1 = $(this).parent().siblings('.p1').find('input')#}
+{#                let p2 = $(this).parent().siblings('.p2').find('input')#}
+{#                let p3 = $(this).parent().siblings('.p3').find('select')#}
+{#                p1.val(entity)#}
+{#                p2.val(name2)#}
+{#                p1.attr('readonly', true)#}
+{#                p2.attr('readonly', true)#}
+{#                p3.append(`<option value="${name3_val}" selected>${ name3 }</option>`)#}
+{#                $(this).val('true')#}
+{#            } else {#}
+{#                let p1 = $(this).parent().siblings('.p1').find('input')#}
+{#                let p2 = $(this).parent().siblings('.p2').find('input')#}
+{#                p1.val('')#}
+{#                p2.val('')#}
+{#                p1.attr('readonly', false)#}
+{#                p2.attr('readonly', false)#}
+{#                $(this).val('false')#}
+{#            }#}
+{#        });#}
+{#  </script>#}
+
+
+
+</table>
+</div>
+</body>
+{% endblock %}
+</html>
+
+
+
+
+
+
+
+
+
+
+

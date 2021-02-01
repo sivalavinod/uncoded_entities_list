@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<html>
+<head>
+    {% block content %}
+       <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+ div.col{
+     font-size: 25px;
+     font-style: oblique
+ }
+    .a{
+        position: absolute;
+        right: 45px;
+    }
+</style>
+</head>
+<body>
+{#<table  width="1367" bgcolor="#2f4f4f">#}
+{#    <tr ><th align="left" ><img src="{% static 'images/medeva_logo.png' %}" width="210" height="80"></th>#}
+{#        <td><h2 align="left" style="font-size:200%; color: white; padding-top: 10px " ><span>Medeva Uncoded List</span></h2></td></tr>#}
+{#</table>#}
+
+       <nav class="navbar navbar-expand-sm navbar-light bg-light">
+         <div class="container">
+             <div class="row">
+             <div class="colapse navbar-collapse">
+                 <ul class="navbar-nav ml-auto">
+                     <li class="nav-item px-2">
+                          <a href="//"> Home </a>
+                     </li >
+                     <li class="nav-item px-1">
+                          <a href="http://medeva.io/" > About Us </a>
+                     </li>
+                      <li class="nav-item px-3"  >
+                         <a class="a" href="{% url 'log_out' %}"> Logout</a>
+                     </li>
+
+                 </ul>
+            </div>
+             </div>
+</div>
+     </nav>
+<br><br><br>
+<div class="container">
+    <div class="row">
+
+      <div class="col col-lg-4">  <a href="{% url 'admin_hm' %}">Submit Token</a>&nbsp;</div>
+      <div class="col col-lg-4">  <a href="{% url 'verification' %}">Verify Token</a></div>
+      <div class="col col-lg-4">  <a href="{% url 'add_new_user' %}">Create New User</a></div>
+
+    </div>
+
+    </div>
+</body>
+{% endblock %}
+
+</html>

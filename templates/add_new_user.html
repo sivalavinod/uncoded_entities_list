@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+<html>
+<head>
+    {% block content %}
+     <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+.t{
+    font-size: 20px;
+    padding-top: 100px;
+    padding-left: 100px;
+}
+    .button{
+        font-size: 20px;
+        background-color: silver;
+        border-radius: 12px;
+    }
+    .a{
+        "font-size: 20px";
+        position: absolute;
+        top:100px;
+        right: 45px;
+        font-size: 20px;
+    }
+</style>
+</head>
+<body>
+{#<table  width="1367" bgcolor="#2f4f4f">#}
+{#    <tr ><th align="left" ><img src="{% static 'images/medeva_logo.png' %}" width="210" height="80"></th>#}
+{#        <td><h2 align="left" style="font-size:200%; color: white; padding-top: 10px " ><span>Medeva Uncoded List</span></h2></td></tr>#}
+{#</table>#}
+
+<br>
+            <a class="a" href="{% url 'verification_page' %}"> Back</a>
+<br><br><br><br>
+<div class="container">
+<div class="col col-lg-4">
+    <h4 align="center"> Add New User</h4>
+<br>
+    <form action="{% url 'add_new_user' %}" method="post">
+            {% csrf_token %}
+<div class="form-group" style="font-style: oblique">
+    <label>User name</label>
+    <input type="text" name="user_name" class="form-control" placeholder="Enter UserName" required autocomplete="off">
+</div>
+        <div class="form-group"style="font-style: oblique">
+            <label>Password</label>
+             <input type="password" name="password" class="form-control" required placeholder="Enter Password">
+        </div >
+        <div style="font-style: oblique">
+            <label>Type</label>
+            <select name="user_type">
+                <option>admin</option>
+                <option>user</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-md-12 text-center ">
+            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Save</button>
+        </div>
+    </form>
+</div>
+
+    </div>
+</body>
+{% endblock %}
+</html>

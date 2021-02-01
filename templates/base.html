@@ -1,0 +1,57 @@
+{% load static %}
+<html>
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        {#table,th,td{#}
+        {#    border-collapse: collapse;#}
+        {#}#}
+        .rows{
+            width: 100%;
+            height: 12%;
+            background-color:#2f4f4f ;
+        }
+        .logo{
+            top: 4px;
+            position: absolute;
+            left: 25px;
+        }
+        .headin{
+            position: absolute;
+            color: white;
+            left: 550px;
+            top: 15px;
+        }
+        </style>
+</head>
+<body>
+    <div class="rows" >
+        <div class="logo">
+            <img src="{% static 'images/medeva_logo.png' %}"  >
+        </div>
+        <div class="headin">
+{#            <h2 align="left" style="font-size:200%; color: white; padding-top: 30px " ><span>Medeva Uncoded List</span></h2>#}
+            <h2>Medeva uncoded list</h2>
+        </div>
+    </div>
+
+
+
+{#<table bgcolor="#2f4f4f" width="1370px" >#}
+{##}
+{#        <tr ><th align="left" ><img src="{% static 'images/medeva_logo.png' %}"  ></th>#}
+{#            <td><h2 align="left" style="font-size:200%; color: white; padding-top: 30px " ><span>Medeva Uncoded List</span></h2></td>#}
+{#        </tr>#}
+{#</table>#}
+
+{% block content %}
+
+{% endblock %}
+</body>
+</html>

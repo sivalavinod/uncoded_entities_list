@@ -1,0 +1,106 @@
+from django.shortcuts import render,redirect,HttpResponse
+from .models import dataa
+import csv
+import psycopg2
+
+def first_page(request):
+    return render(request,"first.html")
+
+# database="v_db"
+# conn=psycopg2.connect(database=database,user='postgres',password='vinod',host='127.0.0.1',port='5432')
+# conn.autocommit = True
+# cur=conn.cursor()
+# cur.execute('select * from after_lockdown')
+# res=cur.fetchall()
+# print(res)
+def hm(request):
+    # l=dataa.objects.filter(is_submit=False)
+    # #print([x.is_submit for x in l ])
+    # return render(request,"hm.html",{"qs":l})
+
+
+    l = []
+    db=list(dataa.objects.values_list('s_no'))
+   # print([type(no[0]) for no in db])
+    with open(r"C:\Users\vinod\Desktop\front_end.csv")as f:
+        pf=csv.DictReader(f)
+        for dat in pf:
+            if int(dat['s_no']) in [no[0] for no in db]:
+                pass
+            else:
+                l.append(dat)
+
+    return render(request,"hm.html",{"qs":l})
+
+
+def update(request,id):
+    z = dataa.objects.get(s_no=id)
+    z.is_verify = True
+    z.entity = request.POST.get('entity', z.entity)
+    z.total_count = request.POST.get('total_count', z.total_count)
+    z.entity_sections = request.POST.get('e section', z.entity_sections)
+    z.organisation_name = request.POST.get('o_name', z.organisation_name)
+    z.doctor_name = request.POST.get('doctor name', z.doctor_name)
+    z.recommended_coding_system = request.POST.get('recommended coding system', z.recommended_coding_system)
+    z.recommended_code = request.POST.get('recommended code', z.recommended_code)
+    z.recommended_token = request.POST.get('recommended token', z.recommended_token)
+    z.is_recommended = request.POST.get('select recommended', z.is_recommended)
+    z.coding_system = request.POST.get('choose code', z.coding_system)
+    z.code = request.POST.get('code', z.code)
+    z.corrected_code_corrected_token = request.POST.get('correct text', z.corrected_code_corrected_token)
+    z.applicable_sections = request.POST.get('applicable for which', z.applicable_sections)
+    z.is_submit=request.POST.get('is_submit',z.is_submit)
+    if z.is_verify and z.is_submit:
+        z.flag_for_discussion = True
+    z.save()
+    return redirect('hm')
+
+#     with open(r"C:\Users\vinod\Desktop\front_end.csv")as f:
+#         pf=csv.DictReader(f)
+#         id_no=[data for data in pf if data['s_no']==str(id) ]
+#
+#
+#         if id_no[0]['s_no']==str(id):
+#             id_no[0]['total_count']=request.POST.get('total_count',0)
+#             id_no[0]['doctor_name']=request.POST.get('doctor_name',None)
+#         print(id_no)
+#         return render(request,'val.html',{'dat':id_no})
+
+def save(request,id):
+    z=dataa.objects.get(s_no=id)
+    z.is_submit=True
+    z.entity=request.POST.get('entity',z.entity)
+    z.total_count=request.POST.get('total_count',z.total_count)
+    z.entity_sections=request.POST.get('e section',z.entity_sections)
+    z.organisation_name=request.POST.get('o_name',z.organisation_name)
+    z.doctor_name=request.POST.get('doctor name',z.doctor_name)
+    z.recommended_coding_system=request.POST.get('recommended coding system',z.recommended_coding_system)
+    z.recommended_code=request.POST.get('recommended code',z.recommended_code)
+    z.recommended_token=request.POST.get('recommended token',z.recommended_token)
+    z.is_recommended=request.POST.get('select recommended',z.is_recommended)
+    z.coding_system=request.POST.get('choose code',z.coding_system)
+    z.code=request.POST.get('code')
+    z.corrected_code_corrected_token=request.POST.get('correct text')
+    z.applicable_sections=request.POST.get('applicable for which',z.applicable_sections)
+    z.is_verify=False
+    z.flag_for_discussion=False
+    z.save()
+
+    qs=dataa(s_no=z,entity=z.entity,total_count=z.total_count,entity_sections=z.entity_sections,organisation_name=z.organisation_name,
+           doctor_name=z.doctor_name,r_coding_system=z.recommended_coding_system,r_code=z.recommended_code,r_token=z.recommended_token).save()
+
+    # qs=dataa{'entity':z.entity,'total_count':z.total_count,'z.entity_sections':z.entity_sections,'organisation_name':z.organisation_name,'doctor_name':z.doctor_name,
+    #      'recommended_coding_system':z.recommended_coding_system,'recommended_code':z.recommended_code,'recommended_token':z.recommended_token,'is_recommended':z.is_recommended,
+    #     'coding_system':z.coding_system,'code':z.code,'corrected_code_corrected_token':z.corrected_code_corrected_token,'applicable_sections':z.applicable_sections,'is_verify':z.is_verify,'flag_for_discussion':z.flag_for_discussion}
+
+    return render(request,"hm.html",{'qs':dataa.objects.filter(is_submit=False)})
+
+def download_csv():
+    response = HttpResponse(content_type="text/csv")
+    response['content-disposition'] = 'attachment;filename="output.csv"'
+    op = dataa.objects.all()
+    writer = csv.writer(response)
+    for dt in op:
+        writer.writerow([dt.s_no, dt.entity, dt.total_count, dt.entity_sections, dt.organisation_name, dt.doctor_name,
+                         dt.r_coding_system, dt.r_code,dt.r_token])
+    return response

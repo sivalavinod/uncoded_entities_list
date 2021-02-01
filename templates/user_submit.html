@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<html>
+<head>
+{% block content %}
+
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{##}
+{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+{#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>#}
+{##}
+
+    <style>
+        table,th,td{
+            border-collapse: collapse;}
+          .a{
+            color: white;
+              font-size: 10px;
+              text-align: center;
+        }
+        .b{
+            text-align: center;
+            height: 50px;
+            width: 20px;
+            word-wrap: break-word;
+            font-size: 14px
+        }
+         .c{
+        position: absolute;
+        right: 50px;
+    }
+        .d{
+            position: absolute;
+            left: 20px;
+        }
+        .e{
+            padding-left: 1px;
+        }
+        {#.medeva_text{#}
+        {#    position: absolute;#}
+        {#    top:0px;#}
+        {#    right: 500px;#}
+        {#    font-size: 20px;#}
+        {#}#}
+
+          .navbar-expand-sm {
+            background-color: lightgrey;
+        }
+          .search{
+              position: absolute;
+              right: 50px;
+              top : 115px;
+          }
+        .href_show_all{
+             position: absolute;
+              right: 400px;
+              top : 115px;
+        }
+        .pagination{
+            position: absolute;
+            left: 400px;
+            top : 115px;
+        }
+    </style>
+</head>
+
+<body>
+
+{#<table bgcolor="#2f4f4f" width="1350px" >#}
+{##}
+{#        <tr ><th align="left" ><img src="{% static 'images/medeva_logo.png' %}"  ></th>#}
+{#            <td><h2 align="left" style="font-size:200%; color: white; padding-top: 10px " class="medeva_text" ><span>Medeva Uncoded List</span></h2></td>#}
+{#        </tr>#}
+{#</table>#}
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <div >#}
+{#            <img src="{% static 'images/medeva_logo.png' %}">#}
+{#        </div>#}
+{#        <div><h2 style="text-align: center">Medeva Uncoded List</h2></div>#}
+{#    </div>#}
+{#</div>#}
+
+
+
+
+
+
+     <nav class="navbar navbar-expand-sm navbar-lighr bg-light " >
+         <div class="container">
+             <div class="row">
+             <div class="colapse navbar-collapse">
+                 <ul class="navbar-nav ml-auto">
+                     <li class="nav-item px-0">
+                          <a class="d" href="//"> Home </a>
+                     </li >
+
+                     <li class="nav-item px-0">
+                          <a class="e" href="http://medeva.io/" > About Us </a>
+                     </li>
+                      <li class="nav-item px-9">
+                         <a class="c" href="{% url 'log_out' %}"> Logout</a>
+                     </li>
+
+                 </ul>
+            </div>
+
+             </div>
+</div>
+     </nav>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="search">
+            <form action="{% url 'hm' %}" method="post">
+                 {% csrf_token %}
+                 <input type="text" name="search" placeholder="search" autocomplete="off">
+                    <button type="submit">search</button>
+            </form>
+        </div>
+
+        <div class="href_show_all">
+            <a href="{% url 'hm' %}">show all</a>
+        </div>
+
+         <div class="pagination">
+             <span class="step-links">
+                {% if qs.has_previous %}
+                    <a href="{% url 'hm' %}?pageno=1">&laquo; first</a>
+                    <a href="{% url 'hm' %}?pageno={{ qs.previous_page_number }}">previous</a>
+                {% endif %}
+             <span class="current">
+                  Page {{ qs.number }} of {{ qs.paginator.num_pages }}.
+             </span>
+
+                {% if qs.has_next %}
+                   <a href="{% url 'hm' %}?pageno={{ qs.next_page_number }}">next</a>
+                   <a href="{% url 'hm' %}?pageno={{ qs.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+             </span>
+         </div>
+
+    </div>
+
+</div>
+<div >
+  <table border="1" style="font-family:Calibri" class="sortable"  >
+   <tr bgcolor="green" class="a">
+       <th class="" >S.No</th>
+       <th>Entity</th>
+       <th>Total Count</th>
+       <th>Entity Section</th>
+       <th>Organisation name</th>
+       <th width="20px">Doctor_Name</th>
+       <th>Recommended
+           Coding System</th>
+       <th>Recommended
+           Code</th>
+       <th>Recommended
+           Token</th>
+       <th>Select
+           Recommended</th>
+       <th>Correct Text</th>
+       <th>Code</th>
+       <th>Applicable For Which</th>
+       <th></th>
+
+   </tr>
+
+  {% for x in qs %}
+      <tr class="b">
+      <td class="s_no" >{{x.s_no  }}</td>
+      <td >{{x.entity }}</td>
+      <td>{{x.total_count  }}</td>
+      <td>{{x.entity_sections  }}</td>
+      <td>{{x.organisation_name  }}</td>
+      <td>{{x.doctor_name  }}</td>
+        <form action="{% url 'save' id=x.s_no %}" method="post">
+              {% csrf_token %}
+{#      <td class="v1"><input type="text"  value="{{x.recommended_coding_system  }}" id="rec_coding_sys" class="rec_coding_sys"></td>#}
+      <td class="v3">{{x.recommended_coding_system  }}</td>
+      <td class="v2">{{x.recommended_code  }}</td>
+{#      <td class="v2"><input type="text"  value="{{x.recommended_code  }}" id="rec_code"class="rec_code"></td>#}
+      <td class="recommended_token">{{x.recommended_token  }}</td>
+
+      <td style="text-align: center">
+          <input type="checkbox" name="select_recommended" value='false' class="check_box_">
+      </td>
+
+       <td class="p1"><input type="text" name="correct text"  id="rec_coding_sys" required autocomplete="off"></td>
+       <td class="p2" width="100"><input type="text" name="code"  id="rec_code" required autocomplete="off" ></td>
+
+
+      <td class="p3">
+          <select name="applicable_for_which" id="select_drug_typ{{ x.s_no }}" >
+
+              <option value="SNOMED">SNOMED</option>
+              <option value="LOINC">LOINC</option>
+              <option value="Meds">Meds</option>
+          </select>
+      </td>
+          <td class="bttn" style="padding-left: 2px" ><button type="submit">submit</button> </td>
+          </form>
+</tr>
+{% endfor %}
+
+    <script>
+       $('.check_box_').click(function() {
+            if($(this).is(':checked')) {
+                let entity = $(this).parent().siblings('.recommended_token').text()
+                let name2 = $(this).parent().siblings('.v2').text()
+                let name3 = $(this).parent().siblings('.v3').text()
+                let s_no = $(this).parent().siblings('.s_no').text()
+                let name3_val = $(this).parent().siblings('.v3').val()
+                let p1 = $(this).parent().siblings('.p1').find('input')
+                let p2 = $(this).parent().siblings('.p2').find('input')
+                let p3 = $(this).parent().siblings('.p3').find('select')
+                console.log('checkboxclicked',name3,s_no)
+
+                p1.val(entity)
+                p2.val(name2)
+                p1.attr('readonly', true)
+                p2.attr('readonly', true)
+                $('#select_drug_typ'+s_no).val(name3);
+                {#p3.append(`<option value="${name3_val}" selected>${ name3 }</option>`)#}
+                {#$( "#select_drug_typ option:name3_val" ).text();#}
+                {#$('#select_drug_typ'+s_no+' [value='+name3+']').attr('selected', 'true');#}
+                $(this).val('true')
+            } else {
+                let p1 = $(this).parent().siblings('.p1').find('input')
+                let p2 = $(this).parent().siblings('.p2').find('input')
+                let p3 = $(this).parent().siblings('.p3').find('select')
+                let s_no = $(this).parent().siblings('.s_no').text()
+                console.log('checkboxunclicked')
+                $('#select_drug_typ'+s_no).val('SNOMED');
+                {#$('#select_drug_typ'+s_no+' [value=SNOMED]').attr('selected', 'true');#}
+                p1.val('')
+                p2.val('')
+                p1.attr('readonly', false)
+                p2.attr('readonly', false)
+                $(this).val('false')
+            }
+        });
+
+  </script>
+  </table>
+
+  {#  <script>#}
+{#      $('.check_box_').click(function () {#}
+{#          let defaultvalue = $(this).parent().siblings('.select').find('input').val()#}
+          {#let val1 = $(this).parent().siblings('.v1').find('input').val()#}
+{#          let name = $(this).parent().siblings('.val_11').text()#}
+{#          let name2 = $(this).parent().siblings('.v2').text()#}
+{#          let name3 = $(this).parent().siblings('.v3').text()#}
+          {#let val2 = $(this).parent().siblings('.v2').find('input').val()#}
+{#          let p1 = $(this).parent().siblings('.p1').find('input')#}
+{#          let p2 = $(this).parent().siblings('.p2').find('input')#}
+{#        console.log(defaultvalue)#}
+          {#let drte = $(this).parent().siblings('.drop_text_td').find('select')#}
+{#          let p3 = $(this).parent().siblings('.drop_text').find('input')#}
+{#          p1.val(name)#}
+{#          p2.val(name2)#}
+{#          $("drop_text").val(name3)#}
+          {#p3.val(name3)#}
+          {#drte.html(`<option selected>+val1+</option>`)#}
+{#          console.log(name3)#}
+{#      })#}
+{#  </script>#}
+
+
+{% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ contact.full_name|upper }}<br>
+    ...
+{% endfor %}
+
+
+
+
+{#<table align="center">#}
+{#   <tr>#}
+{#        <th>#}
+{#            {% if qs.has_previous %}#}
+{#                <a href="{% url 'hm' %}?pageno={{ qs.previous_page_number }}">#}
+{#                    Previous#}
+{#                </a>#}
+{#            {% endif %}#}
+{##}
+{#        <th bgcolor="#7cfc00"> Current Page No : {{ qs.number }} of {{ qs.pg.num_pages }} </th>#}
+{##}
+{#        <th>#}
+{#            {% if qs.has_next %}#}
+{#                <a href="{% url 'hm'  %}?pageno={{ qs.next_page_number }}">#}
+{#                    Next#}
+{#                </a>#}
+{#            {% endif %}#}
+{#        </th>#}
+{#    </tr>#}
+
+{#</table>#}
+<br>
+</div>
+
+</body>
+{% endblock %}
+</html>
+
+
+
+
+
+
+
+{#      <tr >#}
+{##}
+{#       <td>{% if res1.has_previous %}#}
+{#                    <a href="?pageno={{ res1.previous_page_number }} ">previous</a>#}
+{#            {% endif %}#}
+{#        </td>#}
+{##}
+{#        <td> Page {{ res1.number }} of {{ res1.paginator.num_pages }}.</td>#}
+{##}
+{#    <td>{% if res1.has_next %}#}
+{#        <a href="?pageno={{ res1.next_page_number }} ">next</a>#}
+{#        {% endif %}#}
+{##}
+{#    </td>#}
+{#    </tr>#}
+
+
+
+

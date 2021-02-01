@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-md-2">
+
+          </div>
+           <div class="col-md-8">
+
+          </div>
+           <div class="col-md-2">
+
+          </div>
+      </div>
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+ <table align="center" border="1"><col width="200" >
+   <tr bgcolor="green" class="a">
+       <th>S.No</th>
+       <th>Entity</th>
+       <th>Total Count</th>
+       <th>Entity Section</th>
+       <th>Organisation name</th>
+       <th>Doctor Name</th>
+       <th>Recommended
+           Coding System</th>
+       <th>Recommended
+           Code</th>
+       <th>Recommended
+           Token</th>
+       <th style="text-align: center">Select
+           Recommended</th>
+       <th>Choose code</th>
+       <th width="100">Code</th>
+       <th class="cd">Correct Text</th>
+       <th>Applicable For Which</th>
+
+   </tr>
+
+  {% for x in qs %}
+      <tr>
+      <td>{{x.s_no  }}</td>
+      <td>{{x.entity }}</td>
+      <td>{{x.total_count  }}</td>
+      <td>{{x.entity_sections  }}</td>
+      <td>{{x.organisation_name  }}</td>
+      <td>{{x.doctor_name  }}</td>
+      <td>{{x.recommended_coding_system  }}</td>
+      <td>{{x.recommended_code  }}</td>
+      <td>{{x.recommended_token  }}</td>
+          <form action="{% url 'save' id=x.s_no %}" method="post">
+              {% csrf_token %}
+      <td><input type="checkbox" name="select recommended" value="True"></td>
+          <td><select name="choose code"><option>SNOMED</option><option>LIONIC</option><option>Meds</option></select></td>
+      <td><input type="text" name="code"></td>
+      <td><input type="number" name="correct text"></td>
+      <td><select name="applicable for which"><option>SNOMED</option><option>LIONIC</option><option>Meds</option></select></td>
+
+
+          <td class="z"><button type="submit">submit</button> </td>
+          </form>
+</tr>
+{% endfor %}
+
+
+  <!--  {% for x in qs %}
+        <tr>
+       <td> {{ x.s_no }} </td>
+        <td> {{ x.entity }} </td>
+        <td>{{ x.total_count }}</td>
+      <td> {{ x.entity_sections }} </td>
+       <td> {{ x.organisation_name }} </td>
+        <td>{{ x.doctor_name }}</td>
+        <td>{{ x.r_coding_system }}</td>
+        <td>{{ x.r_code }}</td>
+        <td>{{ x.r_token }}</td>
+      <form action="{% url 'update' id=x.s_no %}"  method="post">
+            {% csrf_token %}
+
+        <td><input type="checkbox" name="select_recom" >
+        </td>
+
+
+        <td ><select name="coding" > <option>SNOMED</option> <option >LOINC</option><option >Meds</option></select> </td>
+            <td><input type="number" name="code"></td>
+            <td><input type="text" name="correct_text"></td>
+            <td><select name="app_for_which"> </select> </td>
+
+           <td> <button type="submit">submit</button> </td>
+        </form>
+        <td>{{ x.is_flag }}</td>
+        </tr>
+
+    {% endfor %} -->
+
+</table>
+
+
+
+<html>
+<head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        table,th,td{
+    border-collapse:collapse;
+    border-right: 0;
+}
+        .z{
+            background-color: darkgreen;
+            height: 8px;
+        }
+        .a{
+            color: white;
+        }
+        .cd{
+            column-rule: 4px double deeppink;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-8">
+            <table align="center" border="1"><col width="200" >
+   <tr bgcolor="green" class="a">
+       <th>S.No</th>
+       <th>Entity</th>
+       <th>Total Count</th>
+       <th>Entity Section</th>
+       <th>Organisation name</th>
+       <th>Doctor Name</th>
+       <th>Recommended
+           Coding System</th>
+       <th>Recommended
+           Code</th>
+       <th>Recommended
+           Token</th>
+       <th style="text-align: center">Select
+           Recommended</th>
+       <th>Choose code</th>
+       <th width="100">Code</th>
+       <th class="cd">Correct Text</th>
+       <th>Applicable For Which</th>
+
+   </tr>
+
+  {% for x in qs %}
+      <tr>
+      <td>{{x.s_no  }}</td>
+      <td>{{x.entity }}</td>
+      <td>{{x.total_count  }}</td>
+      <td>{{x.entity_sections  }}</td>
+      <td>{{x.organisation_name  }}</td>
+      <td>{{x.doctor_name  }}</td>
+      <td>{{x.recommended_coding_system  }}</td>
+      <td>{{x.recommended_code  }}</td>
+      <td>{{x.recommended_token  }}</td>
+          <form action="{% url 'save' id=x.s_no %}" method="post">
+              {% csrf_token %}
+      <td><input type="checkbox" name="select recommended" value="True"></td>
+          <td><select name="choose code"><option>SNOMED</option><option>LIONIC</option><option>Meds</option></select></td>
+      <td><input type="text" name="code"></td>
+      <td><input type="number" name="correct text"></td>
+      <td><select name="applicable for which"><option>SNOMED</option><option>LIONIC</option><option>Meds</option></select></td>
+
+
+          <td class="z"><button type="submit">submit</button> </td>
+          </form>
+</tr>
+{% endfor %}
+
+
+  <!--  {% for x in qs %}
+        <tr>
+       <td> {{ x.s_no }} </td>
+        <td> {{ x.entity }} </td>
+        <td>{{ x.total_count }}</td>
+      <td> {{ x.entity_sections }} </td>
+       <td> {{ x.organisation_name }} </td>
+        <td>{{ x.doctor_name }}</td>
+        <td>{{ x.r_coding_system }}</td>
+        <td>{{ x.r_code }}</td>
+        <td>{{ x.r_token }}</td>
+      <form action="{% url 'update' id=x.s_no %}"  method="post">
+            {% csrf_token %}
+
+        <td><input type="checkbox" name="select_recom" >
+        </td>
+
+
+        <td ><select name="coding" > <option>SNOMED</option> <option >LOINC</option><option >Meds</option></select> </td>
+            <td><input type="number" name="code"></td>
+            <td><input type="text" name="correct_text"></td>
+            <td><select name="app_for_which"> </select> </td>
+
+           <td> <button type="submit">submit</button> </td>
+        </form>
+        <td>{{ x.is_flag }}</td>
+        </tr>
+
+    {% endfor %} -->
+
+</table>
+        </div>
+         <div class="col-sm-2">
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-2"></div>
+<h3 align="center">Medeva Uncoded List</h3>
+<div class="col-md-8">
+
+</div>
+<div class="col-md-2"></div>
+</div>
+</body>
+</html>
